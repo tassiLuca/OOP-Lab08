@@ -46,9 +46,9 @@ public class BadIOGUI {
         canvas.setLayout(new BorderLayout());
         canvas.add(canvas1, BorderLayout.CENTER);
         final JButton write = new JButton("Write on file");
-        canvas1.add(write, BorderLayout.CENTER);
+        canvas1.add(write);
         final JButton read = new JButton("Read");
-        canvas1.add(read, BorderLayout.CENTER);
+        canvas1.add(read);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
