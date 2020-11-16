@@ -5,10 +5,15 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -36,9 +41,14 @@ public class BadIOGUI {
      */
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
+        final JPanel canvas1 = new JPanel();
+        canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
         canvas.setLayout(new BorderLayout());
+        canvas.add(canvas1, BorderLayout.CENTER);
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        canvas1.add(write, BorderLayout.CENTER);
+        final JButton read = new JButton("Read");
+        canvas1.add(read, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -59,6 +69,19 @@ public class BadIOGUI {
                 } catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
+                }
+            }
+        });
+        read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    final List<String> list = Files.readAllLines(new File(PATH).toPath());
+                    for (final String str : list) {
+                        System.out.println(str);
+                    }
+                } catch (IOException ex) {
+                    System.out.println(ex);
                 }
             }
         });
@@ -83,6 +106,7 @@ public class BadIOGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
@@ -93,6 +117,7 @@ public class BadIOGUI {
      * @param args ignored
      */
     public static void main(final String... args) {
+       System.out.println(PATH);
        new BadIOGUI().display();
     }
 }
