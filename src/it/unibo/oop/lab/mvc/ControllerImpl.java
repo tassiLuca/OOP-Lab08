@@ -8,14 +8,9 @@ import java.util.Objects;
 /**
  * This is the implementation of Controller interface.
  */
-public class ControllerImpl implements Controller {
-    /**
-     * The history of strings printed.
-     */
+public final class ControllerImpl implements Controller {
+
     private final List<String> history = new ArrayList<>();
-    /**
-     * The next string to be printed.
-     */
     private String nextString;
 
     @Override
