@@ -3,6 +3,7 @@ package it.unibo.oop.lab.mvc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This is the implementation of Controller interface.
@@ -13,21 +14,18 @@ public class ControllerImpl implements Controller {
      */
     private final List<String> history = new ArrayList<>();
     /**
-     * The current position on history list.
+     * The next string to be printed.
      */
-    private int currentPos;
+    private String nextString;
 
     @Override
     public void setNextStringToPrint(final String str) {
-        if (str == null) {
-            throw new NullPointerException("str is null");
-        }
-        history.add(str);
+        this.nextString = Objects.requireNonNull(str);
     }
 
     @Override
     public String getNextStringToPrint() {
-        return history.get(this.currentPos + 1);
+        return this.nextString;
     }
 
     @Override
@@ -37,10 +35,11 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void printCurrentString() {
-        if (history.get(this.currentPos) == null) {
+        if (this.nextString == null) {
             throw new IllegalStateException();
         }
-        System.out.println(history.get(this.currentPos++));
+        this.history.add(this.nextString);
+        System.out.println(this.nextString);
     }
-    
+
 }
