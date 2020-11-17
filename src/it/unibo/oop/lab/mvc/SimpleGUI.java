@@ -1,9 +1,13 @@
 package it.unibo.oop.lab.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.border.TitledBorder;
+import javax.swing.*;
 
 /**
  * A very simple program using a graphical interface.
@@ -38,6 +42,27 @@ public final class SimpleGUI {
      * builds a new {@link SimpleGUI}.
      */
     public SimpleGUI() {
+        final JPanel canvas = new JPanel(new BorderLayout());
+        // Add the text field.
+        final JTextField textField = new JTextField("...");
+        textField.setBorder(new TitledBorder("Text Field"));
+        canvas.add(textField, BorderLayout.NORTH);
+        // Add the Text Area with
+        final JTextArea textArea = new JTextArea("...");
+        textArea.setLineWrap(true);
+        textArea.setBorder(new TitledBorder("Text Area"));
+        canvas.add(textArea, BorderLayout.CENTER);
+        // Add the south panel with buttons to print and show history
+        final JButton printBtn = new JButton("Print");
+        final JButton showBtn = new JButton("Show history");
+        final JPanel pSouth = new JPanel(new FlowLayout());
+        pSouth.setBorder(new TitledBorder("South Panel"));
+        pSouth.add(printBtn);
+        pSouth.add(showBtn);
+        canvas.add(pSouth, BorderLayout.SOUTH);
+        
+        frame.setContentPane(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /*
          * Make the frame half the resolution of the screen. This very method is
@@ -60,6 +85,11 @@ public final class SimpleGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+        new SimpleGUI();
     }
 
 }
