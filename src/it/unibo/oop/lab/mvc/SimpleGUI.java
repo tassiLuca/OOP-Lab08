@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.border.TitledBorder;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 /**
  * A very simple program using a graphical interface.
@@ -16,54 +18,55 @@ import javax.swing.*;
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
-
-    /*
-     * Once the Controller is done, implement this class in such a way that:
-     * 
-     * 1) I has a main method that starts the graphical application
-     * 
-     * 2) In its constructor, sets up the whole view
-     * 
-     * 3) The graphical interface consists of a JTextField in the upper part of the frame, 
-     * a JTextArea in the center and two buttons below it: "Print", and "Show history". 
-     * SUGGESTION: Use a JPanel with BorderLayout
-     * 
-     * 4) By default, if the graphical interface is closed the program must exit
-     * (call setDefaultCloseOperation)
-     * 
-     * 5) The behavior of the program is that, if "Print" is pressed, the
-     * controller is asked to show the string contained in the text field on standard output. 
-     * If "show history" is pressed instead, the GUI must show all the prints that
-     * have been done to this moment in the text area.
-     * 
-     */
+    private final Controller controller = new ControllerImpl();
 
     /**
      * builds a new {@link SimpleGUI}.
      */
     public SimpleGUI() {
         final JPanel canvas = new JPanel(new BorderLayout());
-        // Add the text field.
-        final JTextField textField = new JTextField("...");
-        textField.setBorder(new TitledBorder("Text Field"));
+        // Add the text field
+        final JTextField textField = new JTextField();
+        textField.setBorder(new TitledBorder("Text Field: Input"));
         canvas.add(textField, BorderLayout.NORTH);
-        // Add the Text Area with
-        final JTextArea textArea = new JTextArea("...");
+        // Add the Text Area 
+        final JTextArea textArea = new JTextArea();
         textArea.setLineWrap(true);
-        textArea.setBorder(new TitledBorder("Text Area"));
+        textArea.setEditable(false);
+        textArea.setBorder(new TitledBorder("Text Area: Output"));
         canvas.add(textArea, BorderLayout.CENTER);
         // Add the south panel with buttons to print and show history
         final JButton printBtn = new JButton("Print");
         final JButton showBtn = new JButton("Show history");
         final JPanel pSouth = new JPanel(new FlowLayout());
-        pSouth.setBorder(new TitledBorder("South Panel"));
+        pSouth.setBorder(new TitledBorder("South Panel: Control buttons"));
         pSouth.add(printBtn);
         pSouth.add(showBtn);
         canvas.add(pSouth, BorderLayout.SOUTH);
-        
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        /* 
+         * Handlers
+         */
+        printBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                SimpleGUI.this.controller.setNextStringToPrint(textField.getText());
+                SimpleGUI.this.controller.printCurrentString();
+                textField.setText(null);
+            }
+        });
+        showBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final StringBuilder retString = new StringBuilder();
+                final List<String> history = controller.getHistory();
+                for (final String str : history) {
+                    retString.append(str + "\n");
+                }
+                textArea.setText(retString.toString());
+            }
+        });
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -87,8 +90,8 @@ public final class SimpleGUI {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
-    
-    public static void main(String[] args) {
+
+    public static void main(final String[] args) {
         new SimpleGUI();
     }
 
