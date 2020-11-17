@@ -13,25 +13,22 @@ public interface Controller {
      * @throws NullPointerException
      *          if str is Null
      */
-    void setNextStringToPrint(String str) throws NullPointerException;
-    
+    void setNextStringToPrint(String str);
     /**
      * @return the next string to print
      */
     String getNextStringToPrint();
-    
     /**
      * Get the histort of the printed strings. 
      * @return List<String>
      *          the list of printed strings
      */
     List<String> getHistory();
-    
     /** Prints the current string.
      * @throws IllegalStateException
      *          if the current string is unset
      */
-    void printCurrentString() throws IllegalStateException;
+    void printCurrentString();
 
     /*
      * This interface must model a simple controller responsible of I/O access. It
