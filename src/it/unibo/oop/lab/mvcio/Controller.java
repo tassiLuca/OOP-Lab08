@@ -35,12 +35,14 @@ public class Controller {
     private static final String DEFAULT_PATH = System.getProperty("user.home") 
             + System.getProperty("file.separator") + "output.txt";
     private File file;
+
     /**
      * Creates a new file with the default path file name.
      */
     public Controller() {
         this.file = new File(DEFAULT_PATH);
     }
+
     /**
      * Sets a File as the current File.
      * @param file
@@ -49,6 +51,7 @@ public class Controller {
     public void setFile(final File file) {
         this.file = file;
     }
+
     /**
      * 
      * @return the File representation of the current file.
@@ -56,6 +59,7 @@ public class Controller {
     public File getFile() {
         return this.file;
     }
+
     /**
      * 
      * @return the pathname string of the current file.
@@ -63,6 +67,7 @@ public class Controller {
     public String getFilePath() {
         return this.file.toString();
     }
+
     /**
      * 
      * @param strToBeSaved
