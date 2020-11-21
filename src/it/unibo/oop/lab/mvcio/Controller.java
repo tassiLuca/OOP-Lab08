@@ -46,15 +46,19 @@ public class Controller {
     /**
      * Sets a File as the current File.
      * @param file
-     *          the file needs to be the current one.
+     *          the file where to write
      */
     public void setFile(final File file) {
-        this.file = file;
+        final File parent = file.getParentFile();
+        if (parent.exists()) {
+            this.file = file;
+        } else {
+            throw new IllegalArgumentException("The folder doesn't exixts.");
+        }
     }
 
     /**
-     * 
-     * @return the File representation of the current file.
+     * @return the current file.
      */
     public File getFile() {
         return this.file;
