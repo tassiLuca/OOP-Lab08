@@ -1,9 +1,21 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.TitledBorder;
 
 /**
  * A very simple program using a graphical interface.
@@ -12,6 +24,7 @@ import javax.swing.JFrame;
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
+    private final Controller controller = new Controller();
 
     /*
      * Once the Controller is done, implement this class in such a way that:
@@ -36,7 +49,32 @@ public final class SimpleGUI {
     /**
      * builds a new {@link SimpleGUI}.
      */
-    public SimpleGUI() {
+    private SimpleGUI() {
+        final JPanel canvas = new JPanel(new BorderLayout());
+        final JTextArea textArea = new JTextArea();
+        textArea.setBorder(new TitledBorder("Write here..."));
+        textArea.setLineWrap(true);
+        final JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        canvas.add(scroll, BorderLayout.CENTER);
+        final JButton saveBtn = new JButton("Save");
+        canvas.add(saveBtn, BorderLayout.SOUTH);
+        frame.setContentPane(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /**
+         * Handlers
+         */
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final String text = textArea.getText();
+                try {
+                    controller.saveString(text);
+                } catch (IOException ex) {
+                    System.err.println("IOException: " + ex);
+                }
+            }
+        });
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -59,4 +97,11 @@ public final class SimpleGUI {
         frame.setLocationByPlatform(true);
     }
 
+    private void display() {
+        frame.setVisible(true);
+    }
+
+    public static void main(final String[] args) {
+        new SimpleGUI().display();
+    }
 }
