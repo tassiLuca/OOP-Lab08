@@ -12,19 +12,19 @@ public interface Controller {
      *          the next string to be printed
      */
     void setNextStringToPrint(String str);
-    
+
     /**
      * @return the next string to print
      */
     String getNextStringToPrint();
-    
+
     /**
      * Get the history of the printed strings. 
      * @return List<String>
      *          the list of printed strings
      */
     List<String> getHistory();
-    
+
     /** 
      * Prints the current string.
      */
