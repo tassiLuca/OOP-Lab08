@@ -1,10 +1,15 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
- * 
+ * Simple controller responsible of I/O access. It considers a single
+ * file at a time, and it is able to serialize objects int it.
  */
 public class Controller {
-
     /*
      * This class must implement a simple controller responsible of I/O access. It
      * considers a single file at a time, and it is able to serialize objects in it.
@@ -27,5 +32,49 @@ public class Controller {
      * System.getProperty("file.separator"). The combined use of those methods leads
      * to a software that runs correctly on every platform.
      */
+    private static final String DEFAULT_PATH = System.getProperty("user.home") 
+            + System.getProperty("file.separator") + "output.txt";
+    private File file;
+    /**
+     * Creates a new file with the default path file name.
+     */
+    public Controller() {
+        this.file = new File(DEFAULT_PATH);
+    }
+    /**
+     * Sets a File as the current File.
+     * @param file
+     *          the file needs to be the current one.
+     */
+    public void setFile(final File file) {
+        this.file = file;
+    }
+    /**
+     * 
+     * @return the File representation of the current file.
+     */
+    public File getFile() {
+        return this.file;
+    }
+    /**
+     * 
+     * @return the pathname string of the current file.
+     */
+    public String getFilePath() {
+        return this.file.toString();
+    }
+    /**
+     * 
+     * @param strToBeSaved
+     * @throws IOException 
+     */
+    public void saveString(final String strToBeSaved) throws IOException {
+        try (BufferedWriter w = new BufferedWriter(
+                new FileWriter(this.file))
+        ) {
+            w.write(strToBeSaved);
+            w.newLine();
+        }
+    }
 
 }
