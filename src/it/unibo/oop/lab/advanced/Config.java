@@ -22,8 +22,9 @@ public final class Config {
 
     /**
      * Reads from the config file the game settings.
+     * @throws IOException 
      */
-    public static void readGameSettings() {
+    public static void readGameSettings() throws IOException {
         try (
             BufferedReader in = new BufferedReader(
                         new InputStreamReader(
@@ -46,29 +47,33 @@ public final class Config {
                     System.out.println("NO SETTING FOUND");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
+        }
+    }
+
+    public static void setDefaultSettings() {
+        Config.min = 0;
+        Config.max = 100;
+        Config.attempts = 10;
     }
 
     /**
      * @return the minimum value
      */
     public static int getMin() {
-        return min;
+        return Config.min;
     }
 
     /**
      * @return the maximum value
      */
     public static int getMax() {
-        return max;
+        return Config.max;
     }
 
     /**
      * @return the attempts count
      */
     public static int getAttempts() {
-        return attempts;
+        return Config.attempts;
     }
 }
