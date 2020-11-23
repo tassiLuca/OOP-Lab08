@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.advanced;
 
+import java.io.IOException;
+
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
@@ -11,10 +13,15 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * 
      */
     public DrawNumberApp() {
-        Config.readGameSettings();
+        this.view = new DrawNumberViewImpl();
+        try {
+            Config.readGameSettings();
+        } catch (NumberFormatException | IOException e) {
+            this.view.displayError(e.getMessage() + "\nUses the default settings");
+            Config.setDefaultSettings();
+        }
         this.model = new DrawNumberImpl(Config.getMin(), 
                 Config.getMax(), Config.getAttempts());
-        this.view = new DrawNumberViewImpl();
         this.view.setObserver(this);
         this.view.start();
     }
