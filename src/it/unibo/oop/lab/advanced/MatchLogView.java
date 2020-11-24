@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import java.util.Date;
 import java.util.Objects;
 
-public class WritesNumberView implements DrawNumberView {
+public final class MatchLogView implements DrawNumberView {
 
     private static final String SEPARATOR = System.getProperty("file.separator");
     private static final String LOG_FILE_PATH = System.getProperty("user.dir") 
@@ -20,7 +20,7 @@ public class WritesNumberView implements DrawNumberView {
      *              the name of the log file
      * @throws FileNotFoundException
      */
-    public WritesNumberView(final String fileName) throws FileNotFoundException {
+    public MatchLogView(final String fileName) throws FileNotFoundException {
         this(new PrintStream(new File(LOG_FILE_PATH
                 + Objects.requireNonNull(fileName))));
     }
@@ -28,7 +28,7 @@ public class WritesNumberView implements DrawNumberView {
     /**
      * @param outputLog the PrintStream where to write the match logs
      */
-    public WritesNumberView(final PrintStream outputLog) {
+    public MatchLogView(final PrintStream outputLog) {
         super();
         this.outputLog = outputLog;
         this.outputLog.println("*** This is the match log file ***");
