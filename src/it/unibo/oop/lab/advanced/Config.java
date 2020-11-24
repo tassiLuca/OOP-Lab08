@@ -12,7 +12,7 @@ public final class Config {
     private static final String CONFIG_FILE_NAME = "config.yml";
     private static final String SEPARATOR = System.getProperty("file.separator");
     private static final String CONFIG_FILE_PATH = System.getProperty("user.dir")
-            + SEPARATOR + "/res" + SEPARATOR + CONFIG_FILE_NAME;
+            + SEPARATOR + "res" + SEPARATOR + CONFIG_FILE_NAME;
 
     private static int min;
     private static int max;
