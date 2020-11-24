@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public final class MatchLogView implements DrawNumberView {
 
+    private static final String DATE = new Date(System.currentTimeMillis()).toString();
     private static final String SEPARATOR = System.getProperty("file.separator");
     private static final String LOG_FILE_PATH = System.getProperty("user.dir") 
             + SEPARATOR + "res" + SEPARATOR;
@@ -42,26 +43,22 @@ public final class MatchLogView implements DrawNumberView {
 
     @Override
     public void numberIncorrect() {
-        this.outputLog.println(new Date(System.currentTimeMillis()) 
-                + ": Incorrect Number");
+        this.outputLog.println(DATE + ": Incorrect Number");
     }
 
     @Override
     public void result(final DrawResult res) {
-        this.outputLog.println(new Date(System.currentTimeMillis()) 
-                + ": " + res);
+        this.outputLog.println(DATE + ": " + res);
     }
 
     @Override
     public void limitsReached() {
-        this.outputLog.println(new Date(System.currentTimeMillis()) 
-                + ": You lost!");
+        this.outputLog.println(DATE + ": You lost!");
     }
 
     @Override
     public void displayError(final String message) {
-        this.outputLog.println(new Date(System.currentTimeMillis()) 
-                + ": [ERROR] " + message);
+        this.outputLog.println(DATE + ": [ERROR] " + message);
     }
 
 }
