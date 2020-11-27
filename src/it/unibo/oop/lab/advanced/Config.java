@@ -55,14 +55,20 @@ public final class Config {
                     System.out.println("NO SETTING FOUND");
                 }
             }
+            Config.areConsistent();
         }
     }
 
     /**
      * @return true if the settings are consistent. 
      */
-    public static boolean areConsistent() {
-        return min < max && attempts > 0;
+    private static void areConsistent() {
+        if (min > max || attempts <= 0) {
+            min = DEFAULT_MIN;
+            max = DEFAULT_MAX;
+            attempts = DEFAULT_ATTEMPTS;
+            throw new IllegalStateException("Settings are inconsinstent.");
+        }
     }
 
     /**
