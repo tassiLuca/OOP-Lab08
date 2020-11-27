@@ -9,14 +9,18 @@ import java.util.StringTokenizer;
 
 public final class Config {
 
+    private static final int DEFAULT_MIN = 0;
+    private static final int DEFAULT_MAX = 100;
+    private static final int DEFAULT_ATTEMPTS = 10;
+
     private static final String CONFIG_FILE_NAME = "config.yml";
     private static final String SEPARATOR = System.getProperty("file.separator");
     private static final String CONFIG_FILE_PATH = System.getProperty("user.dir")
             + SEPARATOR + "res" + SEPARATOR + CONFIG_FILE_NAME;
 
-    private static int min;
-    private static int max;
-    private static int attempts;
+    private static int min = DEFAULT_MIN;
+    private static int max = DEFAULT_MAX;
+    private static int attempts = DEFAULT_ATTEMPTS;
 
     private Config() { };
 
@@ -48,12 +52,6 @@ public final class Config {
                 }
             }
         }
-    }
-
-    public static void setDefaultSettings() {
-        Config.min = 0;
-        Config.max = 100;
-        Config.attempts = 10;
     }
 
     /**
