@@ -59,6 +59,13 @@ public final class Config {
     }
 
     /**
+     * @return true if the settings are consistent. 
+     */
+    public static boolean areConsistent() {
+        return min < max && attempts > 0;
+    }
+
+    /**
      * @return the minimum value
      */
     public static int getMin() {
