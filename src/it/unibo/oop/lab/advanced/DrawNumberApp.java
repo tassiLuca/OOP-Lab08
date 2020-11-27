@@ -3,6 +3,7 @@ package it.unibo.oop.lab.advanced;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,12 +14,11 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
     private final List<DrawNumberView> views = new ArrayList<>();
 
     /**
-     * @throws FileNotFoundException 
+     * @param views
+     *          the views to attach
      */
-    public DrawNumberApp() throws FileNotFoundException {
-        this.views.add(new DrawNumberViewImpl());
-        this.views.add(new MatchLogView(System.out));
-        this.views.add(new MatchLogView("match.log"));
+    public DrawNumberApp(final DrawNumberView... views) {
+        this.views.addAll(Arrays.asList(views));
         for (final DrawNumberView view : views) {
             view.setObserver(this);
             view.start();
@@ -27,9 +27,8 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             Config.readGameSettings();
         } catch (NumberFormatException | IOException e) {
             for (final DrawNumberView view : views) {
-                view.displayError(e.getMessage() + "\nUses the default settings");
+                view.displayError(e.getMessage() + "\nUses the default settings for those incorrect!");
             }
-            Config.setDefaultSettings();
         }
         this.model = new DrawNumberImpl(Config.getMin(), Config.getMax(), Config.getAttempts());
     }
@@ -68,7 +67,9 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @throws FileNotFoundException 
      */
     public static void main(final String... args) throws FileNotFoundException {
-        new DrawNumberApp();
+        new DrawNumberApp(new DrawNumberViewImpl(), 
+                new MatchLogView(System.out), 
+                new MatchLogView("match.log"));
     }
 
 }
