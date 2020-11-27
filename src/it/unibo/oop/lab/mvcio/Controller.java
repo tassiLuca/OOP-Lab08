@@ -10,9 +10,7 @@ import java.io.IOException;
  * file at a time, and it is able to serialize objects int it.
  */
 public class Controller {
-    /* The combined use of those methods leads
-     * to a software that runs correctly on every platform.
-     */
+
     private static final String DEFAULT_PATH = System.getProperty("user.home") 
             + System.getProperty("file.separator") + "output.txt";
     private File file;
