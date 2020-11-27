@@ -60,7 +60,7 @@ public final class Config {
     }
 
     /**
-     * @return true if the settings are consistent. 
+     * Check if the settings are in a consistent state.
      */
     private static void areConsistent() {
         if (min > max || attempts <= 0) {
