@@ -25,11 +25,11 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
         }
         try {
             Config.readGameSettings();
-        } catch (NumberFormatException | IOException e) {
+        } catch (IllegalStateException | NumberFormatException | IOException e) {
             for (final DrawNumberView view : views) {
                 view.displayError(e.getMessage() + "\nUses the default settings for those incorrect!");
             }
-        }
+        } 
         this.model = new DrawNumberImpl(Config.getMin(), Config.getMax(), Config.getAttempts());
     }
 
