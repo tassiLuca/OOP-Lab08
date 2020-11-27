@@ -55,7 +55,7 @@ public final class Config {
                     System.out.println("NO SETTING FOUND");
                 }
             }
-            Config.areConsistent();
+            areConsistent();
         }
     }
 
